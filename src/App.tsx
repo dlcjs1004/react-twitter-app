@@ -1,9 +1,11 @@
-import './App.css';
 import Router from 'components/Router';
+import { Layout } from 'components/Rayout';
 
 function App() {
   return (
-    <Router />
+    <Layout>
+      <Router />
+    </Layout>
   );
 }
 
