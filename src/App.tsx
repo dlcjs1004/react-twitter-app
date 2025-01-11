@@ -27,7 +27,11 @@ function App() {
   }, [auth]); //auth값이 바뀔 때마다 호출될 수 있도록 설정
   return (
     <Layout>
-      <ToastContainer />
+      <ToastContainer 
+        theme='dark' 
+        autoClose={1000}
+        hideProgressBar
+        newestOnTop />
       {/* init이 되었을 경우에만 라우터를 보여줄 수 있도록 작업 */}
       {init ? <Router isAuthenticated={isAuthenticated} /> : <Loader />}
     </Layout>
