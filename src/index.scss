@@ -72,6 +72,19 @@ body {
   min-height: 100vh; //뷰포트 기준 100%가 될 수 있도록
 }
 
+.transparent {
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+}
+
+.sticky {
+  width: 100%;
+  position: sticky;
+  max-width: 600px;
+  margin: 0 auto;
+  top: 0;
+}
+
 .button {
   padding: 0.2rem 0.8rem;
   border-radius: 999px;
@@ -85,19 +98,28 @@ body {
 
 //home 레이아웃
 .home {
+  &__ { // 상단 네비게이션바가 고정되도록
+    @extend .transparent;
+    @extend .sticky;
+  }
+
   &__title {
+    background-color: transparent;
+    width: 100%;
     padding: 16px;
     font-size: 20px;
     font-weight: 700;
   }
 
   &__tabs {
+    background-color: transparent;
     width: 100%;
     display: grid; //그리드 형태  /* Fraction(fr) 단위 */
     grid-template-columns: repeat(2, minmax(0, 1fr));//최대 두 개만 리필할 수 있도록
   }
 
   &__tab {
+    background-color: transparent;
     text-align: center;
     font-weight: 500;
     padding: 16px;
