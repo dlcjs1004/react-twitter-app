@@ -46,7 +46,7 @@ export default function PostBox({ post }: PostBoxProps) {
               type="button"
               className="post__edit"
             >
-              <Link to={`/post/edit/${post?.id}`}>Edit</Link>
+              <Link to={`/posts/edit/${post?.id}`}>Edit</Link>
             </button>
           </>
         )}
