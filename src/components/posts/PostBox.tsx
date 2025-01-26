@@ -1,4 +1,6 @@
+import AuthContext from "context/AuthContext";
 import { PostProps } from "pages/home";
+import { useContext } from "react";
 import { FaHeart, FaRegComment, FaUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -7,6 +9,7 @@ interface PostBoxProps {
 }
 
 export default function PostBox({ post }: PostBoxProps) {
+  const { user } = useContext(AuthContext);
   const handleDelete = () => {};
 
   return (
@@ -30,22 +33,24 @@ export default function PostBox({ post }: PostBoxProps) {
         </div>
       </Link>
       <div className="post__box-footer">
-        {/* post.uid === user.uid일 때 (아직 사용자 인증 로직 없기 때문) */}
-        <>
-          <button
-            type="button"
-            className="post__delete"
-            onClick={handleDelete}
-          >
-            Delete
-          </button>
-          <button
-            type="button"
-            className="post__edit"
-          >
-            <Link to={`/post/edit/${post?.id}`}>Edit</Link>
-          </button>
-        </>
+        {user?.uid === post?.uid && (
+          <>
+            <button
+              type="button"
+              className="post__delete"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+            <button
+              type="button"
+              className="post__edit"
+            >
+              <Link to={`/post/edit/${post?.id}`}>Edit</Link>
+            </button>
+          </>
+        )}
+        
         <button type="button" className="post__likes">
           <FaHeart />
           {post?.likeCount || 0}
