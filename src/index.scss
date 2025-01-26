@@ -83,21 +83,43 @@ body {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
+.transparent {
+  background-color: transparent;
+  backdrop-filter: blur(10px);
+}
+
+.sticky {
+  width: 100%;
+  position: sticky;
+  max-width: 600px;
+  margin: 0 auto;
+  top: 0;
+}
+
 //home 레이아웃
 .home {
+  &__top { // 상단 네비게이션바가 고정되도록
+    @extend .transparent;
+    @extend .sticky;
+  }
+
   &__title {
+    background-color: transparent;
+    width: 100%;
     padding: 16px;
     font-size: 20px;
     font-weight: 700;
   }
 
   &__tabs {
+    background-color: transparent;
     width: 100%;
     display: grid; //그리드 형태  /* Fraction(fr) 단위 */
     grid-template-columns: repeat(2, minmax(0, 1fr));//최대 두 개만 리필할 수 있도록
   }
 
   &__tab {
+    background-color: transparent;
     text-align: center;
     font-weight: 500;
     padding: 16px;
@@ -163,6 +185,28 @@ body {
 
 // 홈- 포스트 레이아웃
 .post {
+  &__header {
+    button {
+      border: none;
+      padding: 16px;
+    }
+
+    &-btn {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+  }
+  &__no-posts {
+    padding: 16px;
+
+    .post__text {
+      font-size: 14px;
+      border: 1px solid $gray;
+      border-radius: 4px;
+      padding: 16px;
+    }
+  }
   padding-bottom: 40px;
 
   &__flex {

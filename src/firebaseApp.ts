@@ -1,4 +1,5 @@
 import { initializeApp, FirebaseApp, getApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 
 //initialize를 매번 호출할 때마다 하는 게 아니라 첨에 initialize가 되어있으면
 //getApp을 통해서 해당 앱을 가져오고, 그게 아닌경우에만 initialize를 하기 위함.
@@ -21,4 +22,7 @@ try {
 }
 
 const firebase = initializeApp(firebaseConfig);
+
+export const db = getFirestore(app);
+
 export default firebase;
