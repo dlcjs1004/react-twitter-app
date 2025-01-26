@@ -8,6 +8,8 @@ import AuthContext from "context/AuthContext";
 export default function PostForm() {
   const { user } = useContext(AuthContext);
   const [content, setContent] = useState<string>("");
+  const [hashTag, setHashTag] = useState<string>("");
+  const [tags, setTags] = useState<string[]>([]); //성공적으로 생성한 태그들을 담고 있음
 
   const handleFileUpload = () => {};
 
@@ -24,7 +26,10 @@ export default function PostForm() {
         }),
         uid: user?.uid,
         email: user?.email,
-      })
+        hashTags: tags,
+      });
+      setTags([]);
+      setHashTag("");
       setContent("");
       toast.success("게시글을 생성했습니다.");
     } catch (e: any) {
@@ -44,6 +49,27 @@ export default function PostForm() {
     }
   };
 
+  const removeTag = (tag: string) => {
+    setTags(tags?.filter((val) => val !== tag));
+  };
+
+  const onChangeHashTag = (e: any) => {
+    setHashTag(e?.target?.value?.trim());
+  };
+
+  const handleKeyUp = (e: any) => {
+    // 스페이스바를 눌렀고, vlaue가 빈 값이 아니라면 태그를 생성해준다
+    if (e.keyCode === 32 && e.target.value.trim() !== "") {
+      //만약 같은 태그가 있다면 에러를 띄운다.
+      if (tags?.includes(e.target.value?.trim())) {
+        toast.error("같은 태그가 있습니다.");
+      } else {
+        setTags((prev) => (prev?.length > 0 ? [...prev, hashTag] : [hashTag]));
+        setHashTag(""); //초기화
+      }
+    }
+  };
+
   return (
     <form className="post-form" onSubmit={onSubmit}>
       <textarea 
@@ -55,6 +81,32 @@ export default function PostForm() {
         onChange={onChange}
         value={content}
       />
+
+      <div className="post-form__hashtags">
+        <span className="post-form__hashtags-outputs">
+          {tags?.map((tag, index) => (
+            <span 
+              className="post-form__hashtags-tag" 
+              key={index}
+              onClick={() => removeTag(tag)}
+            >
+              #{tag}
+            </span>
+          ))}
+        </span>
+        
+        <input 
+          className="post-form__input"
+          name="hashtag"
+          id="hashtag"
+          placeholder="해시태그 + 스페이스바 입력"
+          onChange={onChangeHashTag}
+          onKeyUp={handleKeyUp} //스페이스바 눌렀을 때 입력되도록
+          value={hashTag}
+          />
+
+      </div>
+
       <div className="post-form__submit-area">
         <label htmlFor="file-input" className="post-form__file">
           <FiImage className="post-form__file-icon" />
